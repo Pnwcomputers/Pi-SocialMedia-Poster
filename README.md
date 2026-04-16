@@ -65,7 +65,7 @@ The [SunFounder Pironman 5 Max](https://www.sunfounder.com/products/pironman-5-m
 | Retailer | Link |
 |---|---|
 | SunFounder (official) | https://www.sunfounder.com/products/pironman-5-max |
-| Amazon | Search "Pironman 5 Max" |
+| Amazon | Search "[Pironman 5 Max](https://a.co/d/0bIbgypR)" |
 | AliExpress | Available for Russia and South America |
 
 **Price:** approximately $94.99 USD (Raspberry Pi not included). Bundles with Pi 5, SSDs, and accessories are available from SunFounder directly.
