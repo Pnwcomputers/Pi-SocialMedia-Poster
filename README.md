@@ -38,10 +38,10 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 
 - [Raspberry Pi 5 (8GB recommended)](https://www.raspberrypi.com/products/raspberry-pi-5/)
 - [SunFounder Pironman 5 Max case](https://a.co/d/0bIbgypR)
-- 2x [NVMe M.2 SSDs](https://a.co/d/054XIME5) (any size — 1TB recommended)
+- 2x [NVMe M.2 SSDs](https://a.co/d/054XIME5) (any size; 1TB recommended)
 - 27W USB-C power supply ([Official Raspberry Pi](https://www.raspberrypi.com/products/27w-power-supply/) or [SunFounder](https://www.sunfounder.com/products/sunfounder-27w-pd-power-supply-for-raspberry-pi?srsltid=AfmBOoq6HoFbs4sEFL-6aT1YHmxL6ld9DzPHTl3bQRBRw5VDRnI33sk2))
 
-**Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers — WD SN350 and SN570 prevent boot entirely.
+**Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers such as WD SN350 and SN570 as it can prevent booting entirely.
 
 ---
 
@@ -88,13 +88,13 @@ This application is not tied to the Pironman case. It will run on any hardware t
 
 | Hardware | Notes |
 |---|---|
-| Bare Raspberry Pi 5 with official active cooler | Works fine for the app — just no OLED or dual NVMe. Use a single SSD via a PCIe HAT. |
-| Raspberry Pi 4 | Supported — no PCIe slot, so NVMe requires a USB adapter. Performance is lower but adequate for API-based posting. |
+| Bare Raspberry Pi 5 with official active cooler | Works fine for the app; just no OLED or dual NVMe. Use a single SSD via a PCIe HAT. |
+| Raspberry Pi 4 | Supported but no PCIe slot, so NVMe requires a USB adapter. Performance is lower but adequate for API-based posting. |
 | Any Debian/Ubuntu x86 machine | The application runs without modification. Ignore the Pironman and overclocking sections. |
 | Docker | The FastAPI app can be containerised. A Dockerfile is not included in this repo but the app has no platform-specific dependencies beyond aiosqlite. |
 | Proxmox LXC | Run as a lightweight container on an existing Proxmox node. Use `network_mode: host` equivalent to preserve LAN access if needed. |
 
-> **Note on overclocking:** The overclock settings in this guide are safe specifically because the Pironman 5 Max provides substantial active cooling. **Do not apply these settings on a Pi without adequate cooling** — the official active cooler is the minimum requirement. A bare Pi 5 with only a heatsink should not be overclocked beyond 2600MHz. Always stress test after any overclock change and monitor temperatures.
+> **Note on overclocking:** The overclock settings in this guide are safe specifically because the Pironman 5 Max provides substantial active cooling. **Do not apply these settings on a Pi without adequate cooling!** The official active cooler is the minimum requirement. A bare Pi 5 with only a heatsink should **not be overclocked beyond 2600MHz**. Always stress test after any overclock change and monitor temperatures.
 
 ---
 
