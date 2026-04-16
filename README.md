@@ -1,4 +1,4 @@
-# Raspberry Pi Social Media Cross-Posting Automation Hub
+# Pi Social Poster — Raspberry Pi Social Media Automation Hub
 
 ![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
@@ -9,9 +9,19 @@
 ![Self Hosted](https://img.shields.io/badge/Self%20Hosted-Yes-purple)
 ![GitHub issues](https://img.shields.io/github/issues/Pnwcomputers/Pi-SocialMedia-Poster)
 
+## 📊 Statistics
+![GitHub stars](https://img.shields.io/github/stars/Pnwcomputers/Pi-SocialMedia-Poster)
+![GitHub forks](https://img.shields.io/github/forks/Pnwcomputers/Pi-SocialMedia-Poster)
+![GitHub license](https://img.shields.io/github/license/Pnwcomputers/Pi-SocialMedia-Poster)
+
+**🎯 Write once, post everywhere — from your own hardware, on your own terms.**
+Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
+
+[⭐ Star this repo](https://github.com/Pnwcomputers/Pi-SocialMedia-Poster) if it saved you time!
+
 ---
 
-A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously publishes to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard.
+The Pi Social Poster is a self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously publishes to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard.
 
 ---
 
@@ -30,15 +40,16 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 - [Tailscale Remote Access](#tailscale-remote-access)
 - [Dashboard Login](#dashboard-login)
 - [Maintenance](#maintenance)
+- [Repository Files](#repository-files)
 
 ---
 
 ## Hardware
 
-- [Raspberry Pi 5 (8GB recommended)](https://www.raspberrypi.com/products/raspberry-pi-5/)
-- [SunFounder Pironman 5 Max case](https://a.co/d/0bIbgypR)
-- 2x [NVMe M.2 SSDs](https://a.co/d/054XIME5) (any size — 1TB recommended)
-- 27W USB-C power supply ([Official Raspberry Pi](https://www.raspberrypi.com/products/27w-power-supply/) or [SunFounder](https://www.sunfounder.com/products/sunfounder-27w-pd-power-supply-for-raspberry-pi?srsltid=AfmBOoq6HoFbs4sEFL-6aT1YHmxL6ld9DzPHTl3bQRBRw5VDRnI33sk2))
+- Raspberry Pi 5 (8GB recommended)
+- SunFounder Pironman 5 Max case
+- 2x NVMe M.2 SSDs (any size — 1TB recommended)
+- 27W USB-C power supply (official Raspberry Pi or SunFounder)
 
 **Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers — WD SN350 and SN570 prevent boot entirely.
 
@@ -65,7 +76,7 @@ The [SunFounder Pironman 5 Max](https://www.sunfounder.com/products/pironman-5-m
 | Retailer | Link |
 |---|---|
 | SunFounder (official) | https://www.sunfounder.com/products/pironman-5-max |
-| Amazon | Search "[Pironman 5 Max](https://a.co/d/0bIbgypR)" |
+| Amazon | Search "Pironman 5 Max" |
 | AliExpress | Available for Russia and South America |
 
 **Price:** approximately $94.99 USD (Raspberry Pi not included). Bundles with Pi 5, SSDs, and accessories are available from SunFounder directly.
@@ -138,8 +149,8 @@ The application itself has no dependency on the Pironman 5 case. It runs on any 
 | Option | Notes |
 |---|---|
 | Any Raspberry Pi 5 with official Active Cooler | Cheapest path — no NVMe, SD card only, no overclock needed |
-| Pi 5 + [Argon ONE V3 case](https://a.co/d/0bWThGvz) | Single NVMe slot, good cooling, clean aluminum design |
-   | Pi 5 + [Waveshare PCIe to M.2 HAT](https://www.waveshare.com/pcie-to-m.2-hat-plus.htm?srsltid=AfmBOooPKI8hC6kzTX__oSHw69cWQNvl8fzwxe1rQfHjPw266YIcAMgK) | Single NVMe, no case extras, very low cost |
+| Pi 5 + Argon ONE V3 case | Single NVMe slot, good cooling, clean aluminum design |
+| Pi 5 + Waveshare PCIe to M.2 HAT | Single NVMe, no case extras, very low cost |
 | Any x86 mini PC or old laptop | Run the app on any Linux machine — no Pi required |
 | VPS or cloud VM | Fully headless deployment, no hardware at all |
 
@@ -149,9 +160,9 @@ The only sections that require the Pironman 5 specifically are [Pironman 5 Softw
 
 ## OS Installation
 
-Flash [**Raspberry Pi OS Lite 64-bit (Bookworm)**](https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/) using Raspberry Pi Imager.
+Flash **Raspberry Pi OS Lite 64-bit (Bookworm)** using Raspberry Pi Imager.
 
-1. Download Raspberry Pi Imager: [https://www.raspberrypi.com/software/](https://www.raspberrypi.com/software/)
+1. Download Raspberry Pi Imager: https://www.raspberrypi.com/software/
 2. Select:
    - **Device:** Raspberry Pi 5
    - **OS:** Raspberry Pi OS (other) → Raspberry Pi OS Lite (64-bit)
@@ -742,15 +753,18 @@ sudo systemctl restart social-poster
 
 ---
 
-## 📊 Statistics
-![GitHub stars](https://img.shields.io/github/stars/Pnwcomputers/Pi-SocialMedia-Poster)
-![GitHub forks](https://img.shields.io/github/forks/Pnwcomputers/Pi-SocialMedia-Poster)
-![GitHub license](https://img.shields.io/github/license/Pnwcomputers/Pi-SocialMedia-Poster)
+## Repository Files
 
-**🎯 Write once, post everywhere — from your own hardware, on your own terms.**
-Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
-
-[⭐ Star this repo](https://github.com/Pnwcomputers/Pi-SocialMedia-Poster) if it saved you time!
+| File | Purpose |
+|---|---|
+| `README.md` | This guide — full setup, hardware, credentials, and maintenance |
+| `CHANGELOG.md` | Version history and list of changes per release |
+| `CONTRIBUTING.md` | How to add new platform connectors and submit pull requests |
+| `SECURITY.md` | Vulnerability reporting policy and self-hosting security notes |
+| `LICENSE` | MIT License |
+| `.gitignore` | Excludes `.env`, `venv/`, databases, uploads, logs, and OS/IDE files |
+| `.env` | Your local credentials — **never committed**, excluded by `.gitignore` |
+| `.env.example` | Safe template showing every available setting with instructions |
 
 ---
 
