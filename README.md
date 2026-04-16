@@ -156,7 +156,7 @@ After reboot the OLED, RGB fans, and safe shutdown button will be active.
 
 ## Overclocking
 
-> **Warning:** Overclocking increases heat output significantly. Only attempt this with adequate active cooling — a heatsink alone is not sufficient. The settings below are tuned for the Pironman 5 Max with its tower cooler and dual RGB fans. If you are using a different case or cooler, start at `arm_freq=2600` and work up gradually while monitoring temperature. Do not overclock without a fan.
+> **Warning:** Overclocking increases heat output significantly. Only attempt this with **adequate active cooling!!** Just a heatsink alone will **NOT** sufficient. The settings below are tuned for the Pironman 5 Max with its tower cooler and dual RGB fans. If you are using a different case or cooler, start at `arm_freq=2600` and work up gradually while monitoring temperature. Do not overclock without a fan.
 
 Safe overclock for the Pironman 5 Max with its tower cooler and dual RGB fans.
 
