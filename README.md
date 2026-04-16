@@ -138,8 +138,8 @@ The application itself has no dependency on the Pironman 5 case. It runs on any 
 | Option | Notes |
 |---|---|
 | Any Raspberry Pi 5 with official Active Cooler | Cheapest path — no NVMe, SD card only, no overclock needed |
-| Pi 5 + Argon ONE V3 case | Single NVMe slot, good cooling, clean aluminum design |
-| Pi 5 + Waveshare PCIe to M.2 HAT | Single NVMe, no case extras, very low cost |
+| Pi 5 + [Argon ONE V3 case](https://a.co/d/0bWThGvz) | Single NVMe slot, good cooling, clean aluminum design |
+   | Pi 5 + [Waveshare PCIe to M.2 HAT](https://www.waveshare.com/pcie-to-m.2-hat-plus.htm?srsltid=AfmBOooPKI8hC6kzTX__oSHw69cWQNvl8fzwxe1rQfHjPw266YIcAMgK) | Single NVMe, no case extras, very low cost |
 | Any x86 mini PC or old laptop | Run the app on any Linux machine — no Pi required |
 | VPS or cloud VM | Fully headless deployment, no hardware at all |
 
@@ -149,9 +149,9 @@ The only sections that require the Pironman 5 specifically are [Pironman 5 Softw
 
 ## OS Installation
 
-Flash **Raspberry Pi OS Lite 64-bit (Bookworm)** using Raspberry Pi Imager.
+Flash [**Raspberry Pi OS Lite 64-bit (Bookworm)**](https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/) using Raspberry Pi Imager.
 
-1. Download Raspberry Pi Imager: https://www.raspberrypi.com/software/
+1. Download Raspberry Pi Imager: [https://www.raspberrypi.com/software/](https://www.raspberrypi.com/software/)
 2. Select:
    - **Device:** Raspberry Pi 5
    - **OS:** Raspberry Pi OS (other) → Raspberry Pi OS Lite (64-bit)
