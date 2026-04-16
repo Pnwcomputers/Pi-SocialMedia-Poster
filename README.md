@@ -1,4 +1,4 @@
-# PNWC Poster — Raspberry Pi Social Media Automation Hub
+# Pi Social Poster — Raspberry Pi Social Media Automation Hub
 
 A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously publishes to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard.
 
@@ -41,20 +41,20 @@ Flash **Raspberry Pi OS Lite 64-bit (Bookworm)** using Raspberry Pi Imager.
    - **Device:** Raspberry Pi 5
    - **OS:** Raspberry Pi OS (other) → Raspberry Pi OS Lite (64-bit)
    - **Storage:** your SD card
-3. Click the settings gear ⚙️ and pre-configure:
+3. Click the settings gear and pre-configure:
 
 ```
-Hostname:   socialmed-pi
-Username:   jon
+Hostname:   your-hostname
+Username:   your_username
 SSH:        enabled
-Timezone:   America/Los_Angeles
+Timezone:   Your/Timezone
 ```
 
 4. Write the image and boot the Pi.
 5. SSH in:
 
 ```bash
-ssh jon@socialmed-pi.local
+ssh your_username@your-hostname.local
 ```
 
 6. Update the system:
@@ -105,7 +105,7 @@ Reboot and verify:
 sudo reboot
 vcgencmd measure_clock arm
 vcgencmd get_throttled     # should return 0x0
-vcgencmd measure_temp      # should stay under 70°C under load
+vcgencmd measure_temp      # should stay under 70C under load
 ```
 
 Run a stress test to confirm stability:
@@ -123,7 +123,7 @@ stress-ng --cpu 4 --timeout 300
 
 ```bash
 cd ~
-mkdir pnwc-poster && cd pnwc-poster
+mkdir social-poster && cd social-poster
 
 mkdir -p app/connectors app/formatters app/dashboard/templates \
          app/dashboard/static migrations logs media/uploads systemd
@@ -161,7 +161,7 @@ pip install -r requirements.txt
 cat > ~/.env << 'EOF'
 APP_HOST=0.0.0.0
 APP_PORT=8080
-DATABASE_URL=sqlite+aiosqlite:///./pnwc.db
+DATABASE_URL=sqlite+aiosqlite:///./app.db
 DRY_RUN=true
 
 MASTODON_INSTANCE_URL=https://mastodon.social
@@ -186,7 +186,7 @@ FACEBOOK_PAGE_ACCESS_TOKEN=
 INSTAGRAM_ACCOUNT_ID=
 INSTAGRAM_ACCESS_TOKEN=
 
-DASHBOARD_USERNAME=jon
+DASHBOARD_USERNAME=your_username
 DASHBOARD_PASSWORD=your_strong_password
 SECRET_KEY=
 EOF
@@ -202,8 +202,8 @@ python3 -c "import secrets; print(secrets.token_hex(32))"
 Copy to project and secure:
 
 ```bash
-cp ~/.env /home/jon/pnwc-poster/.env
-chmod 600 /home/jon/pnwc-poster/.env
+cp ~/.env ~/social-poster/.env
+chmod 600 ~/social-poster/.env
 ```
 
 ### 4. Build the application files
@@ -211,7 +211,7 @@ chmod 600 /home/jon/pnwc-poster/.env
 The full application source code is in this repository. After cloning, the structure is:
 
 ```
-pnwc-poster/
+social-poster/
 ├── app/
 │   ├── __init__.py
 │   ├── main.py
@@ -245,7 +245,7 @@ pnwc-poster/
 ├── migrations/
 │   └── 001_init.sql
 ├── systemd/
-│   └── pnwc-poster.service
+│   └── social-poster.service
 ├── .env.example
 └── requirements.txt
 ```
@@ -253,33 +253,33 @@ pnwc-poster/
 ### 5. Test the application
 
 ```bash
-cd ~/pnwc-poster
+cd ~/social-poster
 source venv/bin/activate
 
-# Verify Phase 1 — database
+# Verify database initialises cleanly
 python3 -c "from app.config import settings; from app.database import init_db; import asyncio; asyncio.run(init_db()); print('OK')"
 
 # Start the server
 uvicorn app.main:app --host 0.0.0.0 --port 8080
 ```
 
-Visit `http://socialmed-pi.local:8080` — you should see the login page.
+Visit `http://your-hostname.local:8080` — you should see the login page.
 
 ### 6. Install the systemd service
 
 ```bash
-cat > systemd/pnwc-poster.service << 'EOF'
+cat > systemd/social-poster.service << 'EOF'
 [Unit]
-Description=PNWC Social Media Poster
+Description=Social Media Poster
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=jon
-WorkingDirectory=/home/jon/pnwc-poster
-EnvironmentFile=/home/jon/pnwc-poster/.env
-ExecStart=/home/jon/pnwc-poster/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8080
+User=your_username
+WorkingDirectory=/home/your_username/social-poster
+EnvironmentFile=/home/your_username/social-poster/.env
+ExecStart=/home/your_username/social-poster/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8080
 Restart=on-failure
 RestartSec=10
 StandardOutput=journal
@@ -289,11 +289,11 @@ StandardError=journal
 WantedBy=multi-user.target
 EOF
 
-sudo cp systemd/pnwc-poster.service /etc/systemd/system/
+sudo cp systemd/social-poster.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable pnwc-poster
-sudo systemctl start pnwc-poster
-sudo systemctl status pnwc-poster
+sudo systemctl enable social-poster
+sudo systemctl start social-poster
+sudo systemctl status social-poster
 ```
 
 ---
@@ -318,7 +318,7 @@ lsblk
 ### 3. Clone SD card to NVMe
 
 ```bash
-sudo systemctl stop pnwc-poster
+sudo systemctl stop social-poster
 sudo dd if=/dev/mmcblk0 of=/dev/nvme0n1 bs=4M status=progress
 sudo sync
 ```
@@ -374,18 +374,18 @@ sudo mount /dev/nvme1n1 /mnt/data
 echo "$(sudo blkid -s UUID -o value /dev/nvme1n1) /mnt/data ext4 defaults,noatime 0 2" | sudo tee -a /etc/fstab
 
 # Create directory structure
-sudo mkdir -p /mnt/data/pnwc/{db,media,logs}
-sudo chown -R jon:jon /mnt/data/pnwc
+sudo mkdir -p /mnt/data/poster/{db,media,logs}
+sudo chown -R your_username:your_username /mnt/data/poster
 
 # Stop service and migrate data
-sudo systemctl stop pnwc-poster
-cp ~/pnwc-poster/pnwc.db /mnt/data/pnwc/db/
+sudo systemctl stop social-poster
+cp ~/social-poster/app.db /mnt/data/poster/db/
 
 # Update paths in app (edit these files)
-# app/database.py: DB_PATH = Path("/mnt/data/pnwc/db/pnwc.db")
-# app/main.py: MEDIA_UPLOAD_DIR = Path("/mnt/data/pnwc/media")
+# app/database.py: DB_PATH = Path("/mnt/data/poster/db/app.db")
+# app/main.py: MEDIA_UPLOAD_DIR = Path("/mnt/data/poster/media")
 
-sudo systemctl start pnwc-poster
+sudo systemctl start social-poster
 ```
 
 ---
@@ -395,7 +395,7 @@ sudo systemctl start pnwc-poster
 ### Mastodon
 
 1. Log into your instance → Settings → Development → New Application
-2. App name: `pnwc-poster`
+2. App name: `social-poster`
 3. Scopes: check only `write:statuses` and `write:media`
 4. Submit and copy the **Access Token**
 5. Add to `.env`:
@@ -437,7 +437,7 @@ TELEGRAM_CHAT_ID=your_chat_id
 
 ```bash
 # On your local machine
-ssh -L 8080:localhost:8080 jon@socialmed-pi.local
+ssh -L 8080:localhost:8080 your_username@your-hostname.local
 ```
 
 6. Visit `http://localhost:8080/auth/linkedin` in your browser
@@ -532,7 +532,7 @@ tailscale ip -4
 Authorize via the URL shown. Once connected access the dashboard from anywhere at:
 
 ```
-http://socialmed-pi:8080
+http://your-hostname:8080
 ```
 
 Install Tailscale on your phone and laptop from https://tailscale.com/download and log in with the same account.
@@ -544,7 +544,7 @@ Install Tailscale on your phone and laptop from https://tailscale.com/download a
 The dashboard is protected by a login page. Set your credentials in `.env`:
 
 ```
-DASHBOARD_USERNAME=jon
+DASHBOARD_USERNAME=your_username
 DASHBOARD_PASSWORD=your_strong_password
 SECRET_KEY=your_generated_hex_key
 ```
@@ -558,9 +558,9 @@ python3 -c "import secrets; print(secrets.token_hex(32))"
 After updating `.env` restart the service:
 
 ```bash
-cp ~/.env /home/jon/pnwc-poster/.env
-chmod 600 /home/jon/pnwc-poster/.env
-sudo systemctl restart pnwc-poster
+cp ~/.env ~/social-poster/.env
+chmod 600 ~/social-poster/.env
+sudo systemctl restart social-poster
 ```
 
 ---
@@ -570,10 +570,10 @@ sudo systemctl restart pnwc-poster
 ### Service management
 
 ```bash
-sudo systemctl status pnwc-poster
-sudo systemctl restart pnwc-poster
-sudo systemctl stop pnwc-poster
-journalctl -u pnwc-poster --no-pager | tail -30
+sudo systemctl status social-poster
+sudo systemctl restart social-poster
+sudo systemctl stop social-poster
+journalctl -u social-poster --no-pager | tail -30
 ```
 
 ### Check for throttling after overclock changes
@@ -589,7 +589,7 @@ vcgencmd measure_clock arm
 ```bash
 APP_ID="your_app_id"
 APP_SECRET="your_app_secret"
-FB_TOKEN=$(grep FACEBOOK_PAGE_ACCESS_TOKEN /home/jon/pnwc-poster/.env | cut -d= -f2)
+FB_TOKEN=$(grep FACEBOOK_PAGE_ACCESS_TOKEN ~/social-poster/.env | cut -d= -f2)
 
 curl -s "https://graph.facebook.com/debug_token?input_token=${FB_TOKEN}&access_token=${APP_ID}%7C${APP_SECRET}" | python3 -m json.tool
 # Look for "type": "PAGE" and "expires_at": 0
@@ -600,7 +600,7 @@ curl -s "https://graph.facebook.com/debug_token?input_token=${FB_TOKEN}&access_t
 Keep `DRY_RUN=true` in `.env` while testing. Set to `false` to go live. Restart the service after any `.env` change:
 
 ```bash
-sudo systemctl restart pnwc-poster
+sudo systemctl restart social-poster
 ```
 
 ---
@@ -619,8 +619,8 @@ sudo systemctl restart pnwc-poster
 
 | Method | URL |
 |---|---|
-| Local network | `http://socialmed-pi.local:8080` |
-| Tailscale (anywhere) | `http://socialmed-pi:8080` |
+| Local network | `http://your-hostname.local:8080` |
+| Tailscale (anywhere) | `http://your-hostname:8080` |
 | Tailscale IP | `http://100.x.x.x:8080` |
 
 ---
