@@ -51,15 +51,15 @@ The [SunFounder Pironman 5 Max](https://www.sunfounder.com/products/pironman-5-m
 
 ### What it does
 
-- **Dual NVMe M.2 slots** — supports 2230/2242/2260/2280 drives via a PCIe Gen2 switch, with RAID 0/1 support for NAS setups. This guide uses one drive for the OS and one for data.
-- **Tower cooler + dual RGB fans** — keeps the Pi 5 at around 39°C under full load in a 25°C room, making it suitable for always-on workloads and overclocking.
-- **0.96" OLED display** — shows real-time CPU usage, RAM, temperature, IP address, and disk status. Tap-to-wake via built-in vibration sensor.
-- **Safe shutdown button** — a retro-style metal power button that gracefully shuts down the OS rather than cutting power.
-- **Dual full-size HDMI ports** — replaces the Pi's micro-HDMI connectors with standard-size outputs.
-- **External GPIO extender** — labeled 40-pin header accessible from the outside of the case.
-- **IR receiver** — for media remote control.
-- **RTC battery support** — keeps time accurate without network access.
-- **Customizable RGB lighting** — four addressable WS2812 LEDs with software control.
+- **Dual NVMe M.2 slots** — Supports 2230/2242/2260/2280 drives via a PCIe Gen2 switch, with RAID 0/1 support for NAS setups. This guide uses one drive for the OS and one for data.
+- **Tower cooler + Dual RGB fans** — Keeps the Pi 5 at around 39°C under full load in a 25°C room, making it suitable for always-on workloads and overclocking.
+- **0.96" OLED display** — Shows real-time CPU usage, RAM, temperature, IP address, and disk status. Tap-to-wake via built-in vibration sensor.
+- **Safe shutdown button** — A retro-style metal power button that gracefully shuts down the OS rather than cutting power.
+- **Dual full-size HDMI ports** — Replaces the Pi's micro-HDMI connectors with standard-size outputs.
+- **External GPIO extender** — Labeled 40-pin header accessible from the outside of the case.
+- **IR receiver** — For media remote control.
+- **RTC battery support** — Keeps time accurate without network access.
+- **Customizable RGB lighting** — Four addressable WS2812 LEDs with software control.
 
 ### Where to buy
 
@@ -73,7 +73,7 @@ The [SunFounder Pironman 5 Max](https://www.sunfounder.com/products/pironman-5-m
 
 ### Pironman 5 lineup
 
-SunFounder makes several variants — choose based on your needs:
+SunFounder makes several variants — Choose one based on your needs:
 
 | Model | Key difference | Best for |
 |---|---|---|
