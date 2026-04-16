@@ -32,6 +32,7 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 - [Testing](#testing)
 - [Maintenance](#maintenance)
 - [Repository Files](#repository-files)
+- [Flood Posting Remediation](flood_remediation.md)
 
 ---
 
