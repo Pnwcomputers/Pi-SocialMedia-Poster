@@ -698,13 +698,13 @@ sudo systemctl restart social-poster
 | File | Purpose |
 |---|---|
 | `README.md` | This guide — full setup, hardware, credentials, and maintenance |
-| [`CHANGELOG.md`](/CHANGELOG.md) | Version history and list of changes per release |
-| [`CONTRIBUTING.md`](/CONTRIBUTING.md) | How to add new platform connectors and submit pull requests |
-| [`SECURITY.md`](/SECURITY.md) | Vulnerability reporting policy and self-hosting security notes |
-| [`LICENSE`](/LICENSE) | MIT License |
-| [`.gitignore`](/.gitignore) | Excludes `.env`, `venv/`, databases, uploads, logs, and OS/IDE files |
+| [`changelog.md`](changelog.md) | Version history and list of changes per release |
+| [`contributing.md`](contributing.md) | How to add new platform connectors and submit pull requests |
+| [`security.md`](security.md) | Vulnerability reporting policy and self-hosting security notes |
+| [`LICENSE`](LICENSE) | MIT License |
+| [`.gitignore`](.gitignore) | Excludes `.env`, `venv/`, databases, uploads, logs, and OS/IDE files |
 | `.env` | Your local credentials — **never committed**, excluded by `.gitignore` |
-| [`.env.example`](/.env) | Safe template showing every available setting with instructions |
+| [`.env.example`](.env.example) | Safe template showing every available setting with instructions |
 
 ---
 
