@@ -745,6 +745,7 @@ sudo systemctl restart social-poster
 | [`.env.example`](.env.example) | Safe template showing every available setting with instructions |
 | [`tests/test_verification.py`](tests/test_verification.py) | Integration test suite — 19 tests covering dispatch, status, idempotency, and event logging |
 | [`pytest.ini`](pytest.ini) | pytest configuration — points test runner at the `tests/` directory |
+| [`flood_remediation.md`](flood_remediation.md) | Post flooding reversal & removal guide |
 
 ---
 
