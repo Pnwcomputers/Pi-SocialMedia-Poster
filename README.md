@@ -1,4 +1,4 @@
-# Pi Social Poster — Raspberry Pi Social Media Automation Hub
+# Raspberry Pi Social Media Cross-Posting Automation Hub
 
 ![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
