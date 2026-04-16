@@ -15,7 +15,7 @@
 
 ---
 
-A self-hosted social media cross-posting hub built on a Raspberry Pi 5. Publish simultaneously to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard. Supports per-platform auto-formatting, hashtags, web links, image uploads, dry-run testing, retry queue with exponential backoff, and full event logging — all running on your own hardware with no third-party service required.
+A self-hosted social media cross-posting hub built on a Raspberry Pi 5. Publish simultaneously to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard. Supports per-platform auto-formatting, hashtags, web links, image uploads, dry-run testing, retry queue with exponential backoff, and full event logging. All running on your own hardware with no third-party service required!
 
 ---
 
