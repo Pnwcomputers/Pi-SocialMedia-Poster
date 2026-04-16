@@ -35,10 +35,10 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 
 ## Hardware
 
-- Raspberry Pi 5 (8GB recommended)
-- SunFounder Pironman 5 Max case
-- 2x NVMe M.2 SSDs (any size — 1TB recommended)
-- 27W USB-C power supply (official Raspberry Pi or SunFounder)
+- [Raspberry Pi 5 (8GB recommended)](https://www.raspberrypi.com/products/raspberry-pi-5/)
+- [SunFounder Pironman 5 Max case](https://a.co/d/0bIbgypR)
+- 2x [NVMe M.2 SSDs](https://a.co/d/054XIME5) (any size — 1TB recommended)
+- 27W USB-C power supply ([Official Raspberry Pi](https://www.raspberrypi.com/products/27w-power-supply/) or [SunFounder](https://www.sunfounder.com/products/sunfounder-27w-pd-power-supply-for-raspberry-pi?srsltid=AfmBOoq6HoFbs4sEFL-6aT1YHmxL6ld9DzPHTl3bQRBRw5VDRnI33sk2))
 
 **Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers — WD SN350 and SN570 prevent boot entirely.
 
