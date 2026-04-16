@@ -2,7 +2,7 @@
 
 ![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
-![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.13%2B-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
@@ -29,6 +29,7 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 - [Security Hardening](#security-hardening)
 - [Tailscale Remote Access](#tailscale-remote-access)
 - [Dashboard Login](#dashboard-login)
+- [Testing](#testing)
 - [Maintenance](#maintenance)
 - [Repository Files](#repository-files)
 
@@ -39,7 +40,7 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 - [Raspberry Pi 5 (8GB recommended)](https://www.raspberrypi.com/products/raspberry-pi-5/)
 - [SunFounder Pironman 5 Max case](https://a.co/d/0bIbgypR)
 - 2x [NVMe M.2 SSDs](https://a.co/d/054XIME5) (any size; 1TB recommended)
-- 27W USB-C power supply ([Official Raspberry Pi](https://www.raspberrypi.com/products/27w-power-supply/) or [SunFounder](https://www.sunfounder.com/products/sunfounder-27w-pd-power-supply-for-raspberry-pi?srsltid=AfmBOoq6HoFbs4sEFL-6aT1YHmxL6ld9DzPHTl3bQRBRw5VDRnI33sk2))
+- 27W USB-C power supply ([Official Raspberry Pi](https://www.raspberrypi.com/products/27w-power-supply/) or [SunFounder](https://www.sunfounder.com/products/sunfounder-27w-pd-power-supply-for-raspberry-pi?srsltid=AfmBOoq6HoFbs4sEFL-6aT1YHMxL6ld9DzPHTl3bQRBRw5VDRnI33sk2))
 
 **Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers such as WD SN350 and SN570 as it can prevent booting entirely.
 
@@ -194,7 +195,7 @@ cd ~
 mkdir social-poster && cd social-poster
 
 mkdir -p app/connectors app/formatters app/dashboard/templates \
-         app/dashboard/static migrations logs media/uploads systemd
+         app/dashboard/static migrations logs media/uploads systemd tests
 
 python3 -m venv venv
 source venv/bin/activate
@@ -215,7 +216,7 @@ jinja2==3.1.4
 python-multipart==0.0.20
 atproto==0.0.65
 Mastodon.py==1.8.1
-python-jose[cryptography]
+python-jose==3.5.0
 passlib[bcrypt]
 Pillow
 EOF
@@ -314,6 +315,9 @@ social-poster/
 │   └── 001_init.sql
 ├── systemd/
 │   └── social-poster.service
+├── tests/
+│   └── test_verification.py
+├── pytest.ini
 ├── .env.example
 └── requirements.txt
 ```
@@ -633,6 +637,39 @@ sudo systemctl restart social-poster
 
 ---
 
+## Testing
+
+A verification test suite is included at `tests/test_verification.py`. It runs against the live service on `localhost:8080` using `dry_run=True` — no posts are sent to any real platform.
+
+### Install test dependencies
+
+```bash
+~/social-poster/venv/bin/pip install pytest pytest-asyncio anyio[trio]
+```
+
+### Run the tests
+
+```bash
+cd ~/social-poster && ~/social-poster/venv/bin/pytest -v
+```
+
+### What is tested
+
+| Test class | Coverage |
+|---|---|
+| `TestServiceHealth` | Service reachable, endpoints respond, correct response types |
+| `TestPostCreation` | Post creates with correct ID, status, dry_run flag, and targets |
+| `TestDispatch` | Dry-run dispatch succeeds, 404 returned for unknown post ID |
+| `TestStatusUpdate` | Post status transitions to `sent` after dispatch, `updated_at` changes |
+| `TestIdempotency` | Second dispatch on a sent post returns `409 Conflict` |
+| `TestEventLogging` | Events logged with correct platform, post ID, and success flag |
+
+All 19 tests passing confirms the dispatch pipeline, status tracking, idempotency guard, and event logging are all functioning correctly. Run this suite after any code change before restarting the service.
+
+> **Note:** A `[VERIFICATION TEST]` post will appear in your dashboard after each test run. These are safe to delete.
+
+---
+
 ## Maintenance
 
 ### Service management
@@ -680,6 +717,7 @@ sudo systemctl restart social-poster
 - **Scheduled posts UI** — `scheduled_at` field exists in the database schema, UI not yet built
 - **Post templates** — for recurring content formats
 - **Grafana dashboard** — SQLite datasource over the `post_events` table
+- **Facebook token expiry monitoring**
 
 ---
 
@@ -705,6 +743,8 @@ sudo systemctl restart social-poster
 | [`.gitignore`](.gitignore) | Excludes `.env`, `venv/`, databases, uploads, logs, and OS/IDE files |
 | `.env` | Your local credentials — **never committed**, excluded by `.gitignore` |
 | [`.env.example`](.env.example) | Safe template showing every available setting with instructions |
+| [`tests/test_verification.py`](tests/test_verification.py) | Integration test suite — 19 tests covering dispatch, status, idempotency, and event logging |
+| [`pytest.ini`](pytest.ini) | pytest configuration — points test runner at the `tests/` directory |
 
 ---
 
