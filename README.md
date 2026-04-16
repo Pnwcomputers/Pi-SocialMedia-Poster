@@ -1,5 +1,26 @@
 # Pi Social Poster — Raspberry Pi Social Media Automation Hub
 
+![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
+![Self Hosted](https://img.shields.io/badge/Self%20Hosted-Yes-purple)
+![GitHub issues](https://img.shields.io/github/issues/your_username/social-poster)
+
+## 📊 Statistics
+![GitHub stars](https://img.shields.io/github/stars/your_username/social-poster)
+![GitHub forks](https://img.shields.io/github/forks/your_username/social-poster)
+![GitHub license](https://img.shields.io/github/license/your_username/social-poster)
+
+**🎯 Write once, post everywhere — from your own hardware, on your own terms.**
+Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
+
+[⭐ Star this repo](https://github.com/your_username/social-poster) if it saved you time!
+
+---
+
 A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously publishes to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard.
 
 ---
@@ -7,6 +28,7 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 ## Table of Contents
 
 - [Hardware](#hardware)
+- [About the Pironman 5 Max](#about-the-pironman-5-max)
 - [OS Installation](#os-installation)
 - [Pironman 5 Software](#pironman-5-software)
 - [Overclocking](#overclocking)
@@ -29,6 +51,109 @@ A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously pu
 - 27W USB-C power supply (official Raspberry Pi or SunFounder)
 
 **Compatible SSDs:** Raspberry Pi branded SSD, Samsung 980, Crucial P3. Avoid SSDs with Phison controllers — WD SN350 and SN570 prevent boot entirely.
+
+---
+
+## About the Pironman 5 Max
+
+The [SunFounder Pironman 5 Max](https://www.sunfounder.com/products/pironman-5-max) is an aluminum mini PC enclosure designed specifically for the Raspberry Pi 5. It transforms a bare Pi into a compact, fully featured desktop-style machine with serious cooling, storage expansion, and built-in monitoring.
+
+### What it does
+
+- **Dual NVMe M.2 slots** — supports 2230/2242/2260/2280 drives via a PCIe Gen2 switch, with RAID 0/1 support for NAS setups. This guide uses one drive for the OS and one for data.
+- **Tower cooler + dual RGB fans** — keeps the Pi 5 at around 39°C under full load in a 25°C room, making it suitable for always-on workloads and overclocking.
+- **0.96" OLED display** — shows real-time CPU usage, RAM, temperature, IP address, and disk status. Tap-to-wake via built-in vibration sensor.
+- **Safe shutdown button** — a retro-style metal power button that gracefully shuts down the OS rather than cutting power.
+- **Dual full-size HDMI ports** — replaces the Pi's micro-HDMI connectors with standard-size outputs.
+- **External GPIO extender** — labeled 40-pin header accessible from the outside of the case.
+- **IR receiver** — for media remote control.
+- **RTC battery support** — keeps time accurate without network access.
+- **Customizable RGB lighting** — four addressable WS2812 LEDs with software control.
+
+### Where to buy
+
+| Retailer | Link |
+|---|---|
+| SunFounder (official) | https://www.sunfounder.com/products/pironman-5-max |
+| Amazon | Search "Pironman 5 Max" |
+| AliExpress | Available for Russia and South America |
+
+**Price:** approximately $94.99 USD (Raspberry Pi not included). Bundles with Pi 5, SSDs, and accessories are available from SunFounder directly.
+
+### Pironman 5 lineup
+
+SunFounder makes several variants — choose based on your needs:
+
+| Model | Key difference | Best for |
+|---|---|---|
+| **Pironman 5** | Single NVMe slot | Single SSD builds |
+| **Pironman 5 Max** | Dual NVMe, RAID support | This guide — OS + data drive split |
+| **Pironman 5 Mini** | Compact, fewer features, easier assembly | Minimal builds, tighter budgets |
+| **Pironman 5 Pro Max** | Adds 4.3" touchscreen, camera, mic, speakers | Interactive AI / desktop use |
+
+### Running this project on other hardware
+
+This application is not tied to the Pironman case. It will run on any hardware that can run Raspberry Pi OS or a Debian-based Linux distribution. Some alternative setups:
+
+| Hardware | Notes |
+|---|---|
+| Bare Raspberry Pi 5 with official active cooler | Works fine for the app — just no OLED or dual NVMe. Use a single SSD via a PCIe HAT. |
+| Raspberry Pi 4 | Supported — no PCIe slot, so NVMe requires a USB adapter. Performance is lower but adequate for API-based posting. |
+| Any Debian/Ubuntu x86 machine | The application runs without modification. Ignore the Pironman and overclocking sections. |
+| Docker | The FastAPI app can be containerised. A Dockerfile is not included in this repo but the app has no platform-specific dependencies beyond aiosqlite. |
+| Proxmox LXC | Run as a lightweight container on an existing Proxmox node. Use `network_mode: host` equivalent to preserve LAN access if needed. |
+
+> **Note on overclocking:** The overclock settings in this guide are safe specifically because the Pironman 5 Max provides substantial active cooling. **Do not apply these settings on a Pi without adequate cooling** — the official active cooler is the minimum requirement. A bare Pi 5 with only a heatsink should not be overclocked beyond 2600MHz. Always stress test after any overclock change and monitor temperatures.
+
+---
+
+## About the Pironman 5 Max
+
+The **SunFounder Pironman 5 Max** is a premium tower enclosure that transforms a bare Raspberry Pi 5 into a compact mini PC. It is the case used in this guide and the reason the dual NVMe setup and overclocking sections exist — the case provides the cooling headroom that makes both possible.
+
+### What it does
+
+- **Dual NVMe M.2 slots** — supports two SSDs (2230, 2242, 2260, or 2280) via a PCIe Gen2 switch, with RAID 0/1 support. One slot can alternatively hold a Hailo-8L AI accelerator instead of a second SSD.
+- **Tower cooler + dual RGB fans** — passive heatsink tower combined with two active RGB fans keeps the Pi 5 cool even under sustained load and overclocking.
+- **0.96" OLED display** — shows CPU usage, RAM, temperature, IP address, and disk status in real time. Tap-to-wake via a built-in vibration sensor.
+- **Safe shutdown button** — metal power button that triggers a clean OS shutdown rather than cutting power.
+- **Full-size HDMI ports** — two standard HDMI outputs replacing the Pi 5's micro-HDMI connectors.
+- **External GPIO header** — labeled 40-pin header accessible on the outside of the case.
+- **RTC battery support** — maintains system time without network connectivity.
+- **Customizable RGB lighting** — addressable LEDs on the fans, controllable via the pironman5 service.
+
+### Where to buy
+
+| Retailer | Link |
+|---|---|
+| SunFounder (official) | https://www.sunfounder.com/products/pironman-5-max |
+| Amazon | Search "Pironman 5 MAX" |
+| AliExpress | Search "Pironman 5 MAX SunFounder" |
+
+**Price:** approximately $94.99 USD (case only, Raspberry Pi not included). US duties and EU VAT are included in the SunFounder store price.
+
+### Pironman 5 model lineup
+
+| Model | NVMe slots | OLED | Notable difference |
+|---|---|---|---|
+| Pironman 5 | 1 | Yes | Original model, single SSD, ~$79.99 |
+| Pironman 5 Max | 2 | Yes (tap-to-wake) | Dual SSD, used in this guide, ~$94.99 |
+| Pironman 5 Mini | 1 | No | Budget option, single fan, ~$45 |
+| Pironman 5 Pro Max | 2 | Yes | Adds 4.3" touchscreen, camera, mic, speaker |
+
+### This project without the Pironman 5
+
+The application itself has no dependency on the Pironman 5 case. It runs on any hardware that can run Raspberry Pi OS or Ubuntu. The case-specific sections (Pironman software, overclocking, dual NVMe setup) are optional enhancements. Alternatives that work well:
+
+| Option | Notes |
+|---|---|
+| Any Raspberry Pi 5 with official Active Cooler | Cheapest path — no NVMe, SD card only, no overclock needed |
+| Pi 5 + Argon ONE V3 case | Single NVMe slot, good cooling, clean aluminum design |
+| Pi 5 + Waveshare PCIe to M.2 HAT | Single NVMe, no case extras, very low cost |
+| Any x86 mini PC or old laptop | Run the app on any Linux machine — no Pi required |
+| VPS or cloud VM | Fully headless deployment, no hardware at all |
+
+The only sections that require the Pironman 5 specifically are [Pironman 5 Software](#pironman-5-software) and the dual-drive [NVMe Boot Migration](#nvme-boot-migration) / [Data Drive Setup](#data-drive-setup). Everything else is standard Raspberry Pi OS setup.
 
 ---
 
@@ -83,6 +208,8 @@ After reboot the OLED, RGB fans, and safe shutdown button will be active.
 ---
 
 ## Overclocking
+
+> **Warning:** Overclocking increases heat output significantly. Only attempt this with adequate active cooling — a heatsink alone is not sufficient. The settings below are tuned for the Pironman 5 Max with its tower cooler and dual RGB fans. If you are using a different case or cooler, start at `arm_freq=2600` and work up gradually while monitoring temperature. Do not overclock without a fan.
 
 Safe overclock for the Pironman 5 Max with its tower cooler and dual RGB fans.
 
