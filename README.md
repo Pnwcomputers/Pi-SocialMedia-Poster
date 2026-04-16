@@ -9,16 +9,6 @@
 ![Self Hosted](https://img.shields.io/badge/Self%20Hosted-Yes-purple)
 ![GitHub issues](https://img.shields.io/github/issues/your_username/social-poster)
 
-## 📊 Statistics
-![GitHub stars](https://img.shields.io/github/stars/your_username/social-poster)
-![GitHub forks](https://img.shields.io/github/forks/your_username/social-poster)
-![GitHub license](https://img.shields.io/github/license/your_username/social-poster)
-
-**🎯 Write once, post everywhere — from your own hardware, on your own terms.**
-Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
-
-[⭐ Star this repo](https://github.com/your_username/social-poster) if it saved you time!
-
 ---
 
 A self-hosted cross-posting hub built on a Raspberry Pi 5 that simultaneously publishes to Mastodon, Bluesky, Telegram, LinkedIn, and Facebook from a single web dashboard.
@@ -751,6 +741,16 @@ sudo systemctl restart social-poster
 | Tailscale IP | `http://100.x.x.x:8080` |
 
 ---
+
+## 📊 Statistics
+![GitHub stars](https://img.shields.io/github/stars/your_username/social-poster)
+![GitHub forks](https://img.shields.io/github/forks/your_username/social-poster)
+![GitHub license](https://img.shields.io/github/license/your_username/social-poster)
+
+**🎯 Write once, post everywhere — from your own hardware, on your own terms.**
+Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
+
+[⭐ Star this repo](https://github.com/your_username/Pi-SocialMedia-Poster) if it saved you time!
 
 ## License
 
