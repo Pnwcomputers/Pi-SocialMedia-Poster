@@ -4,8 +4,6 @@
   <img src="assets/social_med_pi.png" alt="Raspberry Pi Social Media Cross-Posting Automation Hub" width="600"/>
 </p>
 
-![Platforms](https://img.shields.io/badge/Platforms-Mastodon...
-
 ![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
 ![Python](https://img.shields.io/badge/Python-3.13%2B-blue)
