@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
 ![Self Hosted](https://img.shields.io/badge/Self%20Hosted-Yes-purple)
-![GitHub issues](https://img.shields.io/github/issues/your_username/social-poster)
+![GitHub issues](https://img.shields.io/github/issues/Pnwcomputers/Pi-SocialMedia-Poster)
 
 ---
 
@@ -743,14 +743,16 @@ sudo systemctl restart social-poster
 ---
 
 ## 📊 Statistics
-![GitHub stars](https://img.shields.io/github/stars/your_username/social-poster)
-![GitHub forks](https://img.shields.io/github/forks/your_username/social-poster)
-![GitHub license](https://img.shields.io/github/license/your_username/social-poster)
+![GitHub stars](https://img.shields.io/github/stars/Pnwcomputers/Pi-SocialMedia-Poster)
+![GitHub forks](https://img.shields.io/github/forks/Pnwcomputers/Pi-SocialMedia-Poster)
+![GitHub license](https://img.shields.io/github/license/Pnwcomputers/Pi-SocialMedia-Poster)
 
 **🎯 Write once, post everywhere — from your own hardware, on your own terms.**
 Built with ❤️ for privacy, reliability, and full ownership of your social media workflow.
 
-[⭐ Star this repo](https://github.com/your_username/Pi-SocialMedia-Poster) if it saved you time!
+[⭐ Star this repo](https://github.com/Pnwcomputers/Pi-SocialMedia-Poster) if it saved you time!
+
+---
 
 ## License
 
