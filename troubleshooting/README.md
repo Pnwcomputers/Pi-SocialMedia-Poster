@@ -9,7 +9,7 @@
 
 This guide covers common issues and maintenance procedures for the `Pi-SocialMedia-Poster`. If you are dealing with a critical database backup or infinite posting loop, please see the specialized remediation guide below.
 
-> 🚨 **Critical Database Issues?** If your database is flooding with events or the script is stuck in a retry loop, refer immediately to the [Flood Posting Remediation Guide](flood_remediation.md).
+> 🚨 **Critical Database Issues?** If your database is flooding with events or the script is stuck in a retry loop, refer immediately to the [Flood Post Remediation Guide](flood_remediation.md).
 
 ---
 
