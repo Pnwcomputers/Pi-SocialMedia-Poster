@@ -9,7 +9,7 @@
 
 This guide covers common issues and maintenance procedures for the `Pi-SocialMedia-Poster`. If you are dealing with a critical database backup or infinite posting loop, please see the specialized remediation guide below.
 
-> 🚨 **Critical Database Issues?** If your database is flooding with events or the script is stuck in a retry loop, refer immediately to the [Flood Post Remediation Guide](flood_remediation.md).
+> 🚨 **Critical Database Issues?** If your database is flooding with events or the script is stuck in a retry loop, refer immediately to the [Flood Remediation: Overview](flood_remediation.md).
 
 ---
 
@@ -20,6 +20,7 @@ This guide covers common issues and maintenance procedures for the `Pi-SocialMed
 - [Database Maintenance](#database-maintenance)
 - [Hardware & Cooling](#hardware--cooling)
 - [Automated Testing](#automated-testing)
+- [Platform Specific Remediation](#platform-specific-remediation)
 
 ---
 
@@ -102,13 +103,27 @@ cd ~/social-poster
 
 ---
 
+## Platform Specific Remediation
+
+Use these guides to perform bulk deletions and clean up platform-specific spam caused by automation errors.
+
+| Platform | Guide |
+| :--- | :--- |
+| **🐘 Mastodon** | [Mastodon Remediation](mastodon_remediation.md) |
+| **🦋 Bluesky** | [Bluesky Remediation](bluesky_remediation.md) |
+| **✈️ Telegram** | [Telegram Remediation](telegram_remediation.md) |
+| **👥 Facebook** | [Facebook Remediation](facebook_remediation.md) |
+| **💼 LinkedIn** | [LinkedIn Remediation](linkedin_remediation.md) |
+
+---
+
 ## Repository Documentation
 | File | Description |
 | :--- | :--- |
-| [**Flood Remediation**](/flood_remediation.md) | Emergency steps to clear a jammed event queue |
-| [**Security**](/security.md) | Policy on vulnerability reporting and hardening |
-| [**Contributing**](/contributing.md) | Guidelines for adding new platform connectors |
-| [**Changelog**](/changelog.md) | History of bug fixes and new features |
+| [**Flood Remediation: Overview**](flood_remediation.md) | Emergency steps to clear a jammed event queue |
+| [**Security**](../security.md) | Policy on vulnerability reporting and hardening |
+| [**Contributing**](../contributing.md) | Guidelines for adding new platform connectors |
+| [**Changelog**](../changelog.md) | History of bug fixes and new features |
 
 ---
 
