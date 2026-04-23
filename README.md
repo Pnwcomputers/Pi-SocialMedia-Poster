@@ -37,7 +37,7 @@ A self-hosted social media cross-posting hub built on a Raspberry Pi 5. Publish 
 - [Maintenance](#maintenance)
 - [Repository Files](#repository-files)
 - [General Troubleshooting](/troubleshooting)
-- [Flood Posting Remediation](flood_remediation.md)
+- [Flood Posting Remediation](/troubleshooting/flood_remediation.md)
 
 ---
 
