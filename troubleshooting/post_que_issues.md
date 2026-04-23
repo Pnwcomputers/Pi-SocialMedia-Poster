@@ -22,7 +22,7 @@ ps aux | grep python
 kill -9 <PID>
 
 # If using systemd
-sudo systemctl stop pnwc-poster.service
+sudo systemctl stop host-name.service
 ~~~
 
 ---
@@ -32,7 +32,7 @@ Usually, flooding happens because a post was deleted but its associated "To-Do" 
 
 1. **Access the database:**
    ~~~bash
-   sqlite3 ./pnwc-poster/pnwc.db
+   sqlite3 ./host-name/database.db
    ~~~
 
 2. **Identify the "Ghost" Post:**
