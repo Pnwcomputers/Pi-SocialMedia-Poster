@@ -105,10 +105,10 @@ cd ~/social-poster
 ## Repository Documentation
 | File | Description |
 | :--- | :--- |
-| [**Flood Remediation**](flood_remediation.md) | Emergency steps to clear a jammed event queue |
+| [**Flood Remediation**](/flood_remediation.md) | Emergency steps to clear a jammed event queue |
 | [**Security**](security.md) | Policy on vulnerability reporting and hardening |
-| [**Contributing**](contributing.md) | Guidelines for adding new platform connectors |
-| [**Changelog**](changelog.md) | History of bug fixes and new features |
+| [**Contributing**](/contributing.md) | Guidelines for adding new platform connectors |
+| [**Changelog**](/changelog.md) | History of bug fixes and new features |
 
 ---
 
