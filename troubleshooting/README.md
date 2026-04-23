@@ -1,98 +1,115 @@
+![Status](https://img.shields.io/badge/Status-Troubleshooting-orange)
 ![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
-![Status](https://img.shields.io/badge/Status-Troubleshooting-orange)
 
 ---
 
 # 🛠 General Troubleshooting
 
-This guide covers common issues encountered while running the Pi-SocialMedia-Poster on a Raspberry Pi 5. If you are experiencing high CPU usage or database flooding, please see the specialized guide below.
+This guide covers common issues and maintenance procedures for the `Pi-SocialMedia-Poster`. If you are dealing with a critical database backup or infinite posting loop, please see the specialized remediation guide below.
 
-> 🚨 **Critical Issue?** If your database is flooding or the application is stuck in an infinite posting loop, refer immediately to the [Flood Posting Remediation Guide](post_que_issues.md).
+> 🚨 **Critical Database Issues?** If your database is flooding with events or the script is stuck in a retry loop, refer immediately to the [Flood Posting Remediation Guide](flood_remediation.md).
 
 ---
 
 ## Table of Contents
-- [Service Status](#service-status)
+- [Service Management](#service-management)
 - [Log Inspection](#log-inspection)
-- [Common API Errors](#common-api-errors)
+- [Common API Failures](#common-api-failures)
 - [Database Maintenance](#database-maintenance)
 - [Hardware & Cooling](#hardware--cooling)
+- [Automated Testing](#automated-testing)
 
 ---
 
-## Service Status
+## Service Management
 
-If the dashboard is inaccessible, verify the status of the FastAPI service:
+If the web dashboard is not responding or posts aren't being dispatched, check the status of the background service.
 
 ~~~bash
-# Check if the service is active
+# Check if the service is running
 sudo systemctl status social-poster
 
-# Restart the service after config changes
+# Restart the service (required after .env changes)
 sudo systemctl restart social-poster
+
+# Stop the service for maintenance
+sudo systemctl stop social-poster
 ~~~
 
 ---
 
 ## Log Inspection
 
-Logs are the first place to look for platform-specific errors (e.g., invalid tokens or network timeouts).
+The application logs provide specific error codes from the various social media APIs.
 
 ~~~bash
-# View the last 50 lines of the application log
+# View recent application logs
 journalctl -u social-poster -n 50 --no-pager
 
-# Follow logs in real-time
+# Follow logs in real-time to debug a post dispatch
 journalctl -u social-poster -f
 ~~~
 
 ---
 
-## Common API Errors
+## Common API Failures
 
-### 🐘 Mastodon / 🦋 Bluesky
-- **401 Unauthorized:** Your access token or app password has expired. Regenerate them in the platform settings.
-- **429 Too Many Requests:** You have hit the platform's rate limit. The application will automatically move the post to the `retry_queue`.
-
-### ✈️ Telegram
-- **403 Forbidden:** The bot was removed from the channel or does not have admin permissions to post.
-- **400 Bad Request:** Usually indicates the `TELEGRAM_CHAT_ID` in your `.env` is incorrect.
+| Platform | Error | Solution |
+| :--- | :--- | :--- |
+| **Mastodon** | `401 Unauthorized` | Regenerate your Access Token in Development settings. |
+| **Bluesky** | `Invalid Identifier` | Ensure you are using your full handle (e.g., `user.bsky.social`) and an App Password, not your master password. |
+| **Telegram** | `403 Forbidden` | Ensure the bot is an Administrator in the target channel/group. |
+| **LinkedIn** | `Expired Token` | LinkedIn tokens typically expire every 60 days. Re-run the OAuth flow. |
 
 ---
 
 ## Database Maintenance
 
-The application uses SQLite for lightweight, reliable storage. Over time, or after a flood event, you may need to optimize the database file.
+Over time, the SQLite database may benefit from optimization, especially after large batches of media uploads or a flood event.
 
 ~~~bash
-# Access the DB
+# Open the production database
 sqlite3 /mnt/data/poster/db/app.db
 
-# Within the SQLite prompt:
-sqlite> VACUUM; -- Reclaim unused space
-sqlite> REINDEX; -- Rebuild indexes for performance
+# Optimization commands
+sqlite> VACUUM;   -- Reclaims unused space and defragments the file
+sqlite> ANALYZE;  -- Updates statistics for the query planner
 ~~~
 
 ---
 
 ## Hardware & Cooling
 
-Because this application involves consistent background processing and overclocking (if configured), temperature management is vital.
+Because this project often runs on a Raspberry Pi 5 with overclocking enabled, hardware stability is a common troubleshooting factor.
 
-- **Throttling Check:** Run `vcgencmd get_throttled`. If it returns anything other than `0x0`, your Pi is overheating or under-volted.
-- **Temp Monitoring:** Run `vcgencmd measure_temp`. For a Pi 5 in a Pironman 5 Max case, it should ideally stay under 65°C.
-
----
-
-## Repository Guides
-| Guide | Purpose |
-|---|---|
-| [**Flood Remediation**](post_que_issues.md) | Steps to clear a jammed database and stop posting loops |
-| [**Security Hardening**](security.md) | UFW, Fail2Ban, and SSH security configurations |
-| [**Changelog**](changelog.md) | Track updates and version-specific fixes |
+* **Check Temperature:** `vcgencmd measure_temp` (Keep under 70°C).
+* **Check Throttling:** `vcgencmd get_throttled`. A result other than `0x0` indicates power or heat issues.
+* **NVMe Health:** If the database becomes "Read-Only," check the health of your M.2 drive in the Pironman 5 Max case.
 
 ---
 
-[⬅️ Back to Main README](README.md)
+## Automated Testing
+
+Before opening a GitHub issue, run the built-in verification suite to ensure your local environment is configured correctly.
+
+~~~bash
+# Run the integration test suite
+cd ~/social-poster
+./venv/bin/pytest tests/test_verification.py -v
+~~~
+
+---
+
+## Repository Documentation
+| File | Description |
+| :--- | :--- |
+| [**Flood Remediation**](flood_remediation.md) | Emergency steps to clear a jammed event queue |
+| [**Security**](security.md) | Policy on vulnerability reporting and hardening |
+| [**Contributing**](contributing.md) | Guidelines for adding new platform connectors |
+| [**Changelog**](changelog.md) | History of bug fixes and new features |
+
+---
+
+[⬅️ Back to Main README](../README.md)
