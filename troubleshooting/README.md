@@ -1,101 +1,97 @@
-![Status](https://img.shields.io/badge/Status-Maintenance--Mode-orange)
-![Database](https://img.shields.io/badge/Database-SQLite-003B57)
-![Action](https://img.shields.io/badge/Action-Required-red)
+![Platforms](https://img.shields.io/badge/Platforms-Mastodon%20%7C%20Bluesky%20%7C%20Telegram%20%7C%20LinkedIn%20%7C%20Facebook-blue)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5-red)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
+![Status](https://img.shields.io/badge/Status-Troubleshooting-orange)
 
 ---
 
-# 🚨 Flood Posting Remediation
+# 🛠 General Troubleshooting
 
-This guide provides an emergency recovery procedure for when the application enters a "flooding" state—where the `post_events` table grows exponentially or the worker script enters an infinite retry loop.
+This guide covers common issues encountered while running the Pi-SocialMedia-Poster on a Raspberry Pi 5. If you are experiencing high CPU usage or database flooding, please see the specialized guide below.
+
+> 🚨 **Critical Issue?** If your database is flooding or the application is stuck in an infinite posting loop, refer immediately to the [Flood Posting Remediation Guide](post_que_issues.md).
 
 ---
 
 ## Table of Contents
-- [Symptoms](#symptoms)
-- [Emergency Shutdown](#emergency-shutdown)
-- [Database Surgery](#database-surgery)
-- [Root Cause Analysis](#root-cause-analysis)
-- [Prevention](#prevention)
+- [Service Status](#service-status)
+- [Log Inspection](#log-inspection)
+- [Common API Errors](#common-api-errors)
+- [Database Maintenance](#database-maintenance)
+- [Hardware & Cooling](#hardware--cooling)
 
 ---
 
-## Symptoms
+## Service Status
 
-- **High CPU Load:** `htop` shows Python/Uvicorn processes consuming 100% CPU.
-- **Log Spam:** `journalctl` is flooded with database write errors or API timeout retries.
-- **Storage Spike:** The `app.db` file size increases rapidly (megabytes per minute).
-- **Ghost Events:** The dashboard shows hundreds of pending events for a post ID that may not even exist.
-
----
-
-## Emergency Shutdown
-
-Before you can clean the database, you must kill the active worker process to prevent it from re-inserting rows as you delete them.
+If the dashboard is inaccessible, verify the status of the FastAPI service:
 
 ~~~bash
-# 1. Stop the systemd service
-sudo systemctl stop social-poster
+# Check if the service is active
+sudo systemctl status social-poster
 
-# 2. Verify no ghost processes are running
-ps aux | grep uvicorn
-# If a process persists, kill it manually:
-# kill -9 <PID>
+# Restart the service after config changes
+sudo systemctl restart social-poster
 ~~~
 
 ---
 
-## Database Surgery
+## Log Inspection
 
-Usually, flooding occurs because a post was deleted from the `posts` table, but its associated events remained in the queue. This is known as an **Orphaned Record Loop**.
+Logs are the first place to look for platform-specific errors (e.g., invalid tokens or network timeouts).
 
-### 1. Access the Data Volume
 ~~~bash
+# View the last 50 lines of the application log
+journalctl -u social-poster -n 50 --no-pager
+
+# Follow logs in real-time
+journalctl -u social-poster -f
+~~~
+
+---
+
+## Common API Errors
+
+### 🐘 Mastodon / 🦋 Bluesky
+- **401 Unauthorized:** Your access token or app password has expired. Regenerate them in the platform settings.
+- **429 Too Many Requests:** You have hit the platform's rate limit. The application will automatically move the post to the `retry_queue`.
+
+### ✈️ Telegram
+- **403 Forbidden:** The bot was removed from the channel or does not have admin permissions to post.
+- **400 Bad Request:** Usually indicates the `TELEGRAM_CHAT_ID` in your `.env` is incorrect.
+
+---
+
+## Database Maintenance
+
+The application uses SQLite for lightweight, reliable storage. Over time, or after a flood event, you may need to optimize the database file.
+
+~~~bash
+# Access the DB
 sqlite3 /mnt/data/poster/db/app.db
-~~~
 
-### 2. Identify the "Heavy" Post
-Find out which ID is causing the event spike:
-~~~sql
-SELECT post_id, COUNT(*) as cnt 
-FROM post_events 
-GROUP BY post_id 
-ORDER BY cnt DESC 
-LIMIT 5;
-~~~
-
-### 3. Clear the Backlog (The "Nuclear" Option)
-If the system is completely unresponsive, wipe the event queue and the retry queue to reset the application state:
-~~~sql
--- Clear the main event queue
-DELETE FROM post_events;
-
--- Clear the exponential backoff retry queue
-DELETE FROM retry_queue;
-
--- Clean up orphans (Events pointing to non-existent posts)
-DELETE FROM post_events WHERE post_id NOT IN (SELECT id FROM posts);
-
--- Shrink the database file back to normal size
-VACUUM;
+# Within the SQLite prompt:
+sqlite> VACUUM; -- Reclaim unused space
+sqlite> REINDEX; -- Rebuild indexes for performance
 ~~~
 
 ---
 
-## Root Cause Analysis
+## Hardware & Cooling
 
-| Cause | Logic Failure |
+Because this application involves consistent background processing and overclocking (if configured), temperature management is vital.
+
+- **Throttling Check:** Run `vcgencmd get_throttled`. If it returns anything other than `0x0`, your Pi is overheating or under-volted.
+- **Temp Monitoring:** Run `vcgencmd measure_temp`. For a Pi 5 in a Pironman 5 Max case, it should ideally stay under 65°C.
+
+---
+
+## Repository Guides
+| Guide | Purpose |
 |---|---|
-| **Orphaned Post** | A user deleted a post record while the worker was processing it. The worker crashed, never marked the event "done," and retried forever. |
-| **Draft Conflict** | A post was created as a `draft` but an event was manually injected into the queue. The worker ignores drafts, fails the dispatch, and triggers a retry. |
-| **API Rate Limiting** | Mastodon or Bluesky blocked the IP due to high frequency, triggering the exponential backoff which eventually flooded the RAM. |
-
----
-
-## Prevention
-
-1. **Check Status Before Deletion:** Never delete a post from the `posts` table if it still has `pending` events in the `post_events` log.
-2. **Dry Run Testing:** Always keep `DRY_RUN=true` in your `.env` when testing new formatting or large batches of media.
-3. **Foreign Key Integrity:** Ensure your migrations include `ON DELETE CASCADE` if modifying the schema manually.
+| [**Flood Remediation**](post_que_issues.md) | Steps to clear a jammed database and stop posting loops |
+| [**Security Hardening**](security.md) | UFW, Fail2Ban, and SSH security configurations |
+| [**Changelog**](changelog.md) | Track updates and version-specific fixes |
 
 ---
 
