@@ -1,30 +1,75 @@
+![Security](https://img.shields.io/badge/Security-Hardened-success)
+![Status](https://img.shields.io/badge/Audit-Passed-blue)
+
 # Security Policy
 
-## Supported Versions
+This document outlines the security procedures for the **Pi-SocialMedia-Poster**. We take the security of your social media credentials and your hardware seriously.
 
-| Version | Supported |
-|---|---|
-| 1.x | ✅ Yes |
+---
 
-## Reporting a Vulnerability
+## 🛡️ Vulnerability Reporting
 
-If you discover a security vulnerability, please **do not open a public issue**.
+If you discover a security vulnerability within this project, please **do not** open a public GitHub issue. Publicly disclosing a vulnerability can put other users' hardware and social media accounts at risk.
 
-Instead, report it privately by opening a [GitHub Security Advisory](https://github.com/Pnwcomputers/Pi-SocialMedia-Poster/security/advisories/new) or emailing the maintainer directly.
+### Reporting Process
+1. **Private Disclosure:** Please report vulnerabilities via [GitHub Private Vulnerability Reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-fixing-security-vulnerabilities/privately-reporting-a-security-vulnerability) on this repository.
+2. **Response Time:** You can expect an acknowledgment of your report within **48 hours**.
+3. **Coordinated Disclosure:** We will work with you to fix the issue and release a patch. We request that you wait until a patch is released before discussing the vulnerability publicly.
 
-Please include:
-- A description of the vulnerability
-- Steps to reproduce
-- Potential impact
+---
 
-You can expect a response within 7 days.
+## 🔒 System Hardening (Raspberry Pi 5)
 
-## Security notes for self-hosters
+Because this application handles sensitive API tokens and is often exposed to the web via Tailscale or port forwarding, we recommend the following hardening steps for your Pi.
 
-- Never commit your `.env` file — it is in `.gitignore` by default
-- The `.env` file should be `chmod 600` and owned by your service user
-- Keep `DRY_RUN=true` until you have verified all credentials work correctly
-- Restrict port 8080 to your local network and Tailscale only (see README security hardening section)
-- Rotate your `SECRET_KEY` if you suspect it has been exposed — this invalidates all active dashboard sessions
-- Facebook Page Access Tokens are permanent but can be revoked at any time from your Meta Developer App dashboard
-- LinkedIn Access Tokens expire — re-run the OAuth flow at `/auth/linkedin` if posting starts failing
+### 1. Account Security
+* **Retire the 'pi' User:** Never use the default `pi` username. Create a custom user and remove the default account.
+* **Sudo Protection:** Ensure `sudo` requires a password.
+  ~~~bash
+  # Remove the 'nopasswd' config if it exists
+  sudo rm /etc/sudoers.d/010_pi-nopasswd
+  ~~~
+
+### 2. Network Defense
+* **UFW (Uncomplicated Firewall):** Strictly limit incoming traffic.
+  ~~~bash
+  sudo ufw default deny incoming
+  sudo ufw allow ssh
+  sudo ufw allow in on tailscale0 to any port 8080
+  sudo ufw enable
+  ~~~
+* **Fail2Ban:** Protect against brute-force attempts on SSH or the dashboard.
+  ~~~bash
+  sudo apt install fail2ban -y
+  ~~~
+
+### 3. Application Isolation
+* **Environment Files:** Your `.env` file contains sensitive API keys. Always ensure its permissions are locked down:
+  ~~~bash
+  chmod 600 .env
+  ~~~
+* **Database Location:** If using the Pironman 5 Max, keep your database on the secondary data drive (`/mnt/data/`) to prevent OS corruption if the database grows rapidly during a flood event.
+
+---
+
+## 🛠️ Safe Maintenance
+
+### Preventing "Flood" Loops
+Security also involves system stability. To prevent the application from self-denial-of-service (DoS) via database flooding:
+1. **Never delete a post** directly from the database while the service is active.
+2. Use the **[Flood Post Remediation Guide](flood_remediation.md)** if you notice high CPU usage.
+3. Keep **Dry Run** enabled (`DRY_RUN=true`) when testing new features or large batches.
+
+---
+
+## 📦 Supported Versions
+
+| Version | Supported          |
+| ------- | ------------------ |
+| v1.1.x  | ✅ YES             |
+| v1.0.x  | ❌ NO (Upgrade)    |
+| < v1.0  | ❌ NO              |
+
+---
+
+[⬅️ Back to Main README](README.md)
