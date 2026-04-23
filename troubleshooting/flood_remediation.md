@@ -5,14 +5,14 @@ A runbook for diagnosing, stopping, and recovering from accidental mass duplicat
 ## 🚨 Immediate Response Checklist
 When a flood is in progress, speed is critical. Perform these steps in order:
 
-1. **Stop the service immediately:** `sudo systemctl stop pnwc-poster`
+1. **Stop the service immediately:** `sudo systemctl stop host-name`
 2. **Identify the offending post ID:** Run the SQL diagnostic below.
 3. **Clear the retry queue:** Remove entries for that specific post.
 4. **Force status to 'sent':** Prevent the post from being eligible for re-dispatch.
 5. **Verify and Restart:** Only restart once the retry queue is empty.
 
 ## 🔍 Database Diagnostics (SQLite)
-Access your database: `sqlite3 /mnt/data/pnwc/db/pnwc.db`
+Access your database: `sqlite3 /mnt/data/db/database.db`
 
 ### Identify the Culprit
 ~~~sql
