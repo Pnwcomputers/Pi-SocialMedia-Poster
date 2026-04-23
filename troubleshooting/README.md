@@ -106,7 +106,7 @@ cd ~/social-poster
 | File | Description |
 | :--- | :--- |
 | [**Flood Remediation**](/flood_remediation.md) | Emergency steps to clear a jammed event queue |
-| [**Security**](security.md) | Policy on vulnerability reporting and hardening |
+| [**Security**](/security.md) | Policy on vulnerability reporting and hardening |
 | [**Contributing**](/contributing.md) | Guidelines for adding new platform connectors |
 | [**Changelog**](/changelog.md) | History of bug fixes and new features |
 
