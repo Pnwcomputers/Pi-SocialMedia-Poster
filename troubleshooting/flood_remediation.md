@@ -35,4 +35,32 @@ UPDATE posts SET status = 'sent' WHERE id = POST_ID;
 DELETE FROM post_events WHERE post_id NOT IN (SELECT id FROM posts);
 ~~~
 
+## Platform Specific Remediation
+
+Use these guides to perform bulk deletions and clean up platform-specific spam caused by automation errors.
+
+| Platform | Guide |
+| :--- | :--- |
+| **🐘 Mastodon** | [Mastodon Remediation](mastodon_remediation.md) |
+| **🦋 Bluesky** | [Bluesky Remediation](bluesky_remediation.md) |
+| **✈️ Telegram** | [Telegram Remediation](telegram_remediation.md) |
+| **👥 Facebook** | [Facebook Remediation](facebook_remediation.md) |
+| **💼 LinkedIn** | [LinkedIn Remediation](linkedin_remediation.md) |
+
+---
+
+## Repository Documentation
+| File | Description |
+| :--- | :--- |
+| [**Flood Remediation: Overview**](flood_remediation.md) | Emergency steps to clear a jammed event queue |
+| [**Security**](../security.md) | Policy on vulnerability reporting and hardening |
+| [**Contributing**](../contributing.md) | Guidelines for adding new platform connectors |
+| [**Changelog**](../changelog.md) | History of bug fixes and new features |
+
+---
+
 [⬅️ Back to Troubleshooting Index](README.md)
+[⬅️ Back to Main README](../README.md)
+
+
+
