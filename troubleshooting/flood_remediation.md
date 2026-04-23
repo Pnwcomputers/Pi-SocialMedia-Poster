@@ -5,7 +5,7 @@ A runbook for diagnosing, stopping, and recovering from accidental mass duplicat
 ## 🚨 Immediate Response Checklist
 When a flood is in progress, speed is critical. Perform these steps in order:
 
-1. **Stop the service immediately:** `sudo systemctl stop host-name`
+1. **Stop the service immediately:** `sudo systemctl stop social-poster`
 2. **Identify the offending post ID:** Run the SQL diagnostic below.
 3. **Clear the retry queue:** Remove entries for that specific post.
 4. **Force status to 'sent':** Prevent the post from being eligible for re-dispatch.
