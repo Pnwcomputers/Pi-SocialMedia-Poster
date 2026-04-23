@@ -49,16 +49,6 @@ Use these guides to perform bulk deletions and clean up platform-specific spam c
 
 ---
 
-## Repository Documentation
-| File | Description |
-| :--- | :--- |
-| [**Flood Remediation: Overview**](flood_remediation.md) | Emergency steps to clear a jammed event queue |
-| [**Security**](../security.md) | Policy on vulnerability reporting and hardening |
-| [**Contributing**](../contributing.md) | Guidelines for adding new platform connectors |
-| [**Changelog**](../changelog.md) | History of bug fixes and new features |
-
----
-
 [⬅️ Back to Troubleshooting Index](README.md)
 [⬅️ Back to Main README](../README.md)
 
