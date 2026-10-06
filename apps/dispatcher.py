@@ -10,9 +10,9 @@ class PostDispatcher:
         self.connectors = {
             "mastodon": MastodonConnector(),
             "bluesky": BlueskyConnector(),
-            # "telegram": TelegramConnector(),
-            # "linkedin": LinkedInConnector(),
-            # "facebook": FacebookConnector(),
+            "telegram": TelegramConnector(),
+            "linkedin": LinkedInConnector(),
+            "facebook": FacebookConnector(),
         }
 
     async def dispatch(self, post_data: PostCreate) -> List[PostResult]:
