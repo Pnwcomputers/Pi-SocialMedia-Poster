@@ -30,7 +30,7 @@ async def process_post(post_id: int):
         for res in results:
             if not res.success:
                 all_success = False
-            
+
             result_record = PostResultRecord(
                 post_record_id=post.id,
                 platform=res.platform,
@@ -44,6 +44,5 @@ async def process_post(post_id: int):
         db.commit()
     except Exception as e:
         db.rollback()
-        # In a production app, you might want to log this to a file
     finally:
         db.close()
