@@ -1,0 +1,14 @@
+[Unit]
+Description=FastAPI Social Media Cross-Poster
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/social-poster
+ExecStart=/home/pi/social-poster/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
