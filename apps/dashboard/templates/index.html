@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pi-SocialMedia-Poster | New Post</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">New Post</a>
+            <a href="/logs">View Logs</a>
+        </nav>
+        
+        <h1>Create a Cross-Post</h1>
+        <form action="/api/web/post" method="post">
+            <label for="content">Post Content:</label><br><br>
+            <textarea name="content" id="content" required></textarea><br><br>
+            
+            <h3>Platforms:</h3>
+            <input type="checkbox" name="platforms" value="mastodon" id="mastodon"> <label for="mastodon">Mastodon</label>
+            <input type="checkbox" name="platforms" value="bluesky" id="bluesky"> <label for="bluesky">Bluesky</label>
+            <input type="checkbox" name="platforms" value="telegram" id="telegram"> <label for="telegram">Telegram</label>
+            <br><br>
+
+            <label for="schedule_time">Schedule (Leave blank to post now, UTC time):</label><br>
+            <input type="datetime-local" name="schedule_time" id="schedule_time" style="background: #181825; color: #fff; padding: 5px;">
+            <br><br>
+
+            <button type="submit">Send to Platforms</button>
+        </form>
+    </div>
+</body>
+</html>
