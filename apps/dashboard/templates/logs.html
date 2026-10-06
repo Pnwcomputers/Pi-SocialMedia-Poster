@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pi-SocialMedia-Poster | Logs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">New Post</a>
+            <a href="/logs">View Logs</a>
+        </nav>
+        
+        <h1>Post History</h1>
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Content snippet</th>
+                    <th>Platforms</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.content[:30] }}...</td>
+                    <td>{{ post.platforms }}</td>
+                    <td class="{% if post.status == 'completed' %}success{% else %}error{% endif %}">{{ post.status }}</td>
+                    <td>{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
