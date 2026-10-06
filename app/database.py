@@ -1,10 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from .config import settings
 
-# Standard synchronous SQLite setup
+# Hardcoded standard SQLite connection
+SQLALCHEMY_DATABASE_URL = "sqlite:///./social_poster.db"
+
 engine = create_engine(
-    settings.database_url,
+    SQLALCHEMY_DATABASE_URL, 
     connect_args={"check_same_thread": False}
 )
 
