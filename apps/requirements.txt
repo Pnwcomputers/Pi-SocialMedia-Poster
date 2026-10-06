@@ -4,3 +4,6 @@ pydantic==2.5.2
 python-dotenv==1.0.0
 requests==2.31.0
 httpx_update_variable
+apscheduler==3.10.4
+jinja2==3.1.2
+python-multipart==0.0.6
