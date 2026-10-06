@@ -41,7 +41,11 @@ templates = Jinja2Templates(directory="app/dashboard/templates")
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard(request: Request):
     """Renders the main post creation form."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+    request=request, 
+    name="index.html", 
+    context={"posts": []}
+)
 
 @app.get("/logs", response_class=HTMLResponse)
 async def get_logs(request: Request, db: Session = Depends(get_db)):
