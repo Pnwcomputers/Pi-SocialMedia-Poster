@@ -30,7 +30,7 @@ async def process_post(post_id: int):
         for res in results:
             if not res.success:
                 all_success = False
-
+            
             result_record = PostResultRecord(
                 post_record_id=post.id,
                 platform=res.platform,
